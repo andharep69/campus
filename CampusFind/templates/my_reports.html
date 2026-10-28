@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}My reports — CampusFind{% endblock %}
+{% block content %}
+<section class="dashboard-head"><div class="eyebrow">YOUR CAMPUS ACTIVITY</div><h1>My reports</h1><p>Keep track of your listings and private claims.</p><div class="hero-actions"><a class="btn btn-primary" href="{{ url_for('report_item', status='Lost') }}">＋ Report lost</a><a class="btn btn-secondary" href="{{ url_for('report_item', status='Found') }}">Report found</a></div></section>
+<section class="dashboard-section"><div class="section-heading"><div><h2>Your listings</h2><p>Only you and authorized administrators can manage these reports.</p></div></div>
+{% if items %}<div class="simple-list">{% for item in items %}<a class="simple-row" href="{{ url_for('item_detail', item_id=item.id) }}"><span class="simple-symbol">{{ '⌕' if item.status == 'Lost' else '✓' }}</span><span class="simple-main"><b>{{ item.name }}</b><small>{{ item.status }} · {{ item.location }} · {{ item.item_date }}</small></span><span class="state-chip">{{ item.state }}</span><span>→</span></a>{% endfor %}</div>{% else %}<div class="empty-state compact"><h3>No reports yet</h3><p>Your lost and found reports will appear here.</p></div>{% endif %}</section>
+<section class="dashboard-section"><div class="section-heading"><div><h2>Your claims</h2><p>Claims you have submitted to other report owners.</p></div></div>
+{% if claims %}<div class="simple-list">{% for claim in claims %}<a class="simple-row" href="{{ url_for('item_detail', item_id=claim.item_id) }}"><span class="simple-symbol">↗</span><span class="simple-main"><b>{{ claim.item_name }}</b><small>{{ claim.item_status }} · {{ claim.message }}</small></span><span class="state-chip">{{ claim.status }}</span><span>→</span></a>{% endfor %}</div>{% else %}<div class="empty-state compact"><p>You haven’t submitted any claims yet.</p></div>{% endif %}</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Create account' if mode == 'register' else 'Sign in' }} — CampusFind{% endblock %}
+{% block content %}
+<div class="auth-layout"><div class="auth-art"><div class="auth-art-orb"></div><div class="auth-quote-mark">“</div><h2>Good things<br>find their way<br><span>back home.</span></h2><p>Join your campus community and help lost belongings find their people.</p><div class="auth-decoration">⌕</div></div>
+<div class="auth-card"><div class="eyebrow">{{ 'GET STARTED' if mode == 'register' else 'WELCOME BACK' }}</div><h1>{{ 'Create your account' if mode == 'register' else 'Sign in to CampusFind' }}</h1><p class="auth-intro">{{ 'Join your campus community in just a moment.' if mode == 'register' else 'Your campus community is one sign-in away.' }}</p>
+<form method="post" class="form-stack">
+{% if mode == 'register' %}<label>Full name<input name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="e.g. Alex Sharma"></label>{% endif %}
+<label>Email address<input type="email" name="email" required autocomplete="email" placeholder="you@college.edu"></label>
+<label>Password<input type="password" name="password" required minlength="{{ 8 if mode == 'register' else 1 }}" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" placeholder="{{ 'At least 8 characters' if mode == 'register' else 'Your password' }}"></label>
+<button class="btn btn-primary btn-full" type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }} <span>→</span></button>
+</form><p class="auth-switch">{% if mode == 'register' %}Already have an account? <a href="{{ url_for('login') }}">Sign in</a>{% else %}New to CampusFind? <a href="{{ url_for('register') }}">Create an account</a>{% endif %}</p><div class="privacy-note">🔒 Your contact details stay private.</div></div></div>
+{% endblock %}

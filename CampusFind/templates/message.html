@@ -1,0 +1,2 @@
+{% extends "base.html" %}
+{% block content %}<div class="empty-state message-state"><div class="empty-symbol">⌕</div><h1>{{ title }}</h1><p>{{ message }}</p><a class="btn btn-primary" href="{{ url_for('index') }}">Back to home</a></div>{% endblock %}

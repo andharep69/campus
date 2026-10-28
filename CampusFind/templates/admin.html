@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard — CampusFind{% endblock %}
+{% block content %}
+<section class="dashboard-head"><div class="eyebrow">MODERATION</div><h1>Admin dashboard</h1><p>Review community reports and keep CampusFind useful and safe.</p></section>
+<section class="dashboard-section"><div class="section-heading"><div><h2>Flagged listings</h2><p>Reports submitted by users.</p></div></div>
+{% if reports %}<div class="simple-list">{% for report in reports %}<div class="simple-row"><span class="simple-symbol">!</span><span class="simple-main"><b>{{ report.item_name }}</b><small>Reported by {{ report.reporter_name }} · {{ report.reason }}</small></span><a class="small-btn" href="{{ url_for('item_detail', item_id=report.item_id) }}">Review</a></div>{% endfor %}</div>{% else %}<div class="empty-state compact"><p>No flagged listings. Nice work!</p></div>{% endif %}</section>
+<section class="dashboard-section"><div class="section-heading"><div><h2>All listings</h2><p>Remove inappropriate or misleading listings from public browsing.</p></div></div><div class="simple-list">{% for item in items %}<div class="simple-row"><span class="simple-symbol">{{ '⌕' if item.status == 'Lost' else '✓' }}</span><span class="simple-main"><b>{{ item.name }}</b><small>{{ item.status }} · {{ item.location }} · Posted by {{ item.poster_name }}</small></span><span class="state-chip">{{ item.state }}</span>{% if item.state != 'Removed' %}<form method="post" action="{{ url_for('admin_remove', item_id=item.id) }}"><button class="small-btn reject" type="submit">Remove</button></form>{% endif %}</div>{% endfor %}</div></section>
+{% endblock %}

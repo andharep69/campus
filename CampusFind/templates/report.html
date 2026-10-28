@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Report {{ status|lower }} item — CampusFind{% endblock %}
+{% block content %}
+<div class="form-page"><a class="back-link" href="{{ url_for('index') }}">← Back to browse</a><div class="form-intro"><div class="form-icon {{ 'lost-icon' if status == 'Lost' else 'found-icon' }}">{{ '⌕' if status == 'Lost' else '✓' }}</div><div class="eyebrow">{{ 'HELP US LOOK' if status == 'Lost' else 'HELP IT FIND HOME' }}</div><h1>Report a {{ status|lower }} item</h1><p>{{ 'Tell the community what you lost so someone can help you find it.' if status == 'Lost' else 'Share what you found and help reunite it with its owner.' }}</p></div>
+<form method="post" enctype="multipart/form-data" class="report-form">
+<div class="form-grid"><label>Item name <span class="required">*</span><input name="name" required maxlength="100" placeholder="e.g. Black wireless headphones"></label><label>Category <span class="required">*</span><select name="category" required><option value="">Choose a category</option>{% for c in categories %}<option>{{ c }}</option>{% endfor %}</select></label>
+<label class="full-width">Description <span class="required">*</span><textarea name="description" required minlength="8" maxlength="1500" rows="4" placeholder="Color, brand, case, stickers, or other details. Avoid sharing secret identifying details publicly."></textarea><small>Keep one or two unique details private so ownership can be verified.</small></label>
+<label>Location <span class="required">*</span><input name="location" required maxlength="150" placeholder="e.g. Library, second floor"></label><label>{{ 'Date lost' if status == 'Lost' else 'Date found' }} <span class="required">*</span><input type="date" name="item_date" required max="{{ '' }}"></label>
+<label class="full-width upload-label">Photo (optional)<input type="file" name="photo" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"><small>PNG, JPG, JPEG or WEBP · up to 4 MB</small></label>
+<label class="full-width">Preferred handover method<select name="contact_preference"><option value="in_app">Private claim through CampusFind</option><option value="campus_desk">Meet at an official campus help desk</option></select></label></div>
+<div class="privacy-callout"><span>🔐</span><div><b>Your privacy matters</b><p>Your email and phone number are never shown publicly. Claims are sent privately to the person who posted the report.</p></div></div>
+<div class="form-actions"><a class="btn btn-secondary" href="{{ url_for('index') }}">Cancel</a><button class="btn btn-primary" type="submit">Publish report <span>→</span></button></div>
+</form></div>
+{% endblock %}
